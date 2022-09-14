@@ -1,0 +1,93 @@
+/*fuente, tamaño, margen izquierdo y color de fondo para el body*/
+body {
+    font-family: 'Courier New', Courier, monospace, Sans, helvetica, arial, verdana ;
+    font-size: 15px;
+    margin-left: 400px;
+    background-color: rgb(75, 45, 9);
+}
+
+/*Posición para la tabla dónde se muestran las imagenes*/
+#contenido { 
+    position: relative;
+}
+
+/*Posición, margen superior, margen izquierdo, tamaño de la fuente
+  color y negrita del enlace al final de la página.*/
+#adicional { 
+    position:absolute;
+    margin-top:15px;
+    margin-left: 400px;
+    font-size: 14px;
+    left:  0px;
+    color: #666;
+    font-weight: bold ;
+}
+
+h1 {
+    text-align: right;
+    width: 460px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #121235;
+}
+
+h1 strong {
+    font-size: 48px;
+}
+
+/*CSS para la tabla que está dentro del id tablero (definido en js) */
+#tablero table{
+    border: 2px solid #9C9CB1;;
+    padding: 4px 8px;
+}
+
+/*CSS para los tr y td que están contenidos dentro del div con id tablero*/
+#tablero tr, #tablero td{
+    padding: 0;
+    margin: 0;
+}
+
+/*CSS para las imagenes que están dentro de un td que a su vez están dentro 
+   del div con id tablero*/
+#tablero td img {
+    margin: 4px;
+    padding: 0;
+    height: 100px;
+    width : 100px;
+    border: none;
+}
+/*Para cuando se pasa el ratón por encima de las imágenes*/
+#tablero td img:hover {
+    margin: 4px;
+    padding: 0;
+    height: 98px;
+    width : 98px;
+    border: 1px solid red;
+}
+
+/*CSS para el formulario que muestra los contadores*/
+#datos {
+    position: absolute;
+    top : 0px;
+    left: 600px;
+    padding: 4px 6px;
+    background-color: #c6c6e0;
+    border:3px solid red;
+}
+
+/*CSS para los encabezados de listas de definición que están dentro de los div
+  con id datos*/
+#datos dt {
+    font-weight: bold ;
+}
+
+/*CSS para las definiciones de lista de definiciones que están dentro del div con
+   id datos*/
+#datos dd {
+    display: block;
+    width: 42px;
+    border: 1px solid  #777;
+    padding: 2px;
+    text-align:right;
+    margin: 2px 0 12px 36px;
+}
