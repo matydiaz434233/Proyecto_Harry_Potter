@@ -15,7 +15,7 @@ f)	Si se encontraron todas las parejas antes de que termine el tiempo entonces e
    *  / 
 
 
-/***PARAMETROS PARA EL JUEGO*****/
+/***PARAMETROS PARA EL JUEGO  *****/
 var oJuego = new Object() ; //instanciamos un nuevo objeto, el juego de harry
 oJuego.columnas = 5; //establecemos el número de columnas que tendrá el tablero
 oJuego.filas = 4; //establecermos el número de filas que tendrá el tablero
@@ -180,7 +180,8 @@ function comprobar(){
 /*********************************/
 
 //Evento que al cargarse la ventana carga las funciones cargarImagenes, empezarJuego y cargar el reloj
-window.onload = function () { 
+
+window.onload = function iniciamos () { 
     cargarImagenes();
     empezarJuego();
     bienvenida();
@@ -229,3 +230,82 @@ function carga(){
 function bienvenida(){
     carga();
 }
+
+
+
+/*   TEMPORIZADOR */
+
+let horas = 0;
+let minutos = 5;
+let segundos = 0;
+cargarSegundo();
+
+//Definimos y ejecutamos los segundos
+function cargarSegundo(){
+    let txtSegundos;
+
+    if(segundos < 0){
+        segundos = 59; 
+    }
+
+    //Mostrar Segundos en pantalla
+    if(segundos < 10){
+        txtSegundos = `0${segundos}`;
+    }else{
+        txtSegundos = segundos;
+    }
+    document.getElementById('segundos').innerHTML = txtSegundos;
+    segundos--;
+
+    cargarMinutos(segundos);
+}
+
+//Definimos y ejecutamos los minutos
+function cargarMinutos(segundos){
+    let txtMinutos;
+
+    if(segundos == -1 && minutos !== 0){
+        setTimeout(() =>{
+            minutos--;
+        },500)
+    }else if(segundos == -1 && minutos == 0){
+        setTimeout(() =>{
+            minutos = 59;
+        },500)
+    }
+
+    //Mostrar Minutos en pantalla
+    if(minutos < 10){
+        txtMinutos = `0${minutos}`;
+    }else{
+        txtMinutos = minutos;
+    }
+    document.getElementById('minutos').innerHTML = txtMinutos;
+    cargarHoras(segundos,minutos);
+}
+
+//Definimos y ejecutamos las horas
+function cargarHoras(segundos,minutos){
+    let txtHoras;
+
+    if(segundos == -1 && minutos == 0 && horas !== 0){
+        setTimeout(() =>{
+            horas--;
+        },500)
+    }else if(segundos == -1 && minutos == 0 && horas == 0){
+        setTimeout(() =>{
+            horas = 2;
+        },500)
+    }
+
+    //Mostrar Horas en pantalla
+    if(horas < 10){
+        txtHoras = `0${horas}`;
+    }else{
+        txtHoras = horas;
+    }
+    document.getElementById('horas').innerHTML = txtHoras;
+}
+
+//Ejecutamos cada segundo
+setInterval(cargarSegundo,1000);
