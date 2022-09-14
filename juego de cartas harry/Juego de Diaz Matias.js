@@ -1,4 +1,22 @@
+/*  Juego de Memoria de Cartas “Harry Potter”
+
+Utilizando la API de personajes de Harry Potter http://hp-api.herokuapp.com/api/characters realice un juego de memoria de Cartas. 
+El objetivo es lograr memorizar la ubicación de las diferentes cartas con el fin de voltear sucesivamente las 2 cartas idénticas que formen pareja,
+ para llevárselas (sacarlas del tablero). La partida se terminará cuando estén todas las parejas encontradas.
+
+a)	Presente un tablero de cartas (5 columnas) utilizando solo personajes que tengan imágenes. (Recuerde que deben ser 2 cartas por personaje). 
+Presente las cartas del lado oculto.
+b)	Agregue un botón “comenzar a jugar” que inicialice un timer en 5 minutos. El cual se mostrará en pantalla e ira decrementando por segundo
+ hasta llegar a 0 donde finalizara la partida si es que no finalizo antes.
+c)	Lleve en un contador la cantidad de intentos realizados.
+d)	Cada vez que el usuario hace click sobre una carta se muestra el contenido y se espera por saber si la próxima opción hace match o no.
+e)	Si la segunda opción hace match se deben sacar las cartas emparejadas del tablero. Si no se vuelven a ocultar para que el usuario continue 
+el juego.
+f)	Si se encontraron todas las parejas antes de que termine el tiempo entonces el jugador gana y se le informa la cantidad de intentos utilizados.
+
+     */ 
 /***PARAMETROS PARA EL JUEGO*****/
+
 var oJuego = new Object() ; //instanciamos un nuevo objeto, el juego de harry
 oJuego.columnas = 5; //establecemos el número de columnas que tendrá el tablero
 oJuego.filas = 4; //establecermos el número de filas que tendrá el tablero
