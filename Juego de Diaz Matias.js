@@ -34,8 +34,6 @@ var enPausa = false; //pause para esperar a pulsar la segunda carta
 //Función para cargar todas las imagenes. Le damos un tamaño de 100x100
 //Guardamos cada imagen dentro del array para guardar las imagenes
 function cargarImagenes(){
-    
-
     for( i = 0; i < MAXIMO_FICHAS;i++){
            aImagenes[i] = new Image(100,100);
         aImagenes[i].src = oJuego.ruta + i + oJuego.extension;
@@ -313,9 +311,8 @@ function cargarHoras(segundos,minutos){
 setInterval(cargarSegundo,1000);
 
 
-
-// cargo el fecth
-const response= await fetch('http://hp-api.herokuapp.com/api/characters');
-const respuesta= await response.json();
-let personajes = respuesta.filter(x => x.image !="");
-personajes - personajes.concat(personajes);
+// // cargo el fecth
+// const response= await fetch('http://hp-api.herokuapp.com/api/characters');
+// const respuesta= await response.json();
+// let personajes = respuesta.filter(x => x.image !="");
+// personajes - personajes.concat(personajes);
