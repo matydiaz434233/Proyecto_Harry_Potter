@@ -316,3 +316,11 @@ setInterval(cargarSegundo,1000);
 // const respuesta= await response.json();
 // let personajes = respuesta.filter(x => x.image !="");
 // personajes - personajes.concat(personajes);
+
+// const url = "http://hp-api.herokuapp.com/api/characters";
+// fetch(url)
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log(data);
+//   })
+//   .catch((err) => console.log(err));
