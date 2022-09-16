@@ -16,12 +16,12 @@ f)	Si se encontraron todas las parejas antes de que termine el tiempo entonces e
 
 
 /***PARAMETROS PARA EL JUEGO  *****/
-var oJuego = new Object() ; //instanciamos un nuevo objeto, el juego de harry
+var oJuego = new Object(); //instanciamos un nuevo objeto, el juego de harry
 oJuego.columnas = 5; //establecemos el número de columnas que tendrá el tablero
 oJuego.filas = 4; //establecermos el número de filas que tendrá el tablero
-oJuego.extension=".png"; //extensión para TODAS las imagenes
-oJuego.ruta     ="img/"; //directorio dónde seguardan las imagenes
-oJuego.pulsada  = new Array (0,0); //array para guardar las parejas de cartas al pulsar
+oJuego.extension = ".png"; //extensión para TODAS las imagenes
+oJuego.ruta = "img/"; //directorio dónde seguardan las imagenes
+oJuego.pulsada = new Array(0, 0); //array para guardar las parejas de cartas al pulsar
 oJuego.intentos = 0; //contador de intentos
 oJuego.aciertos = 0; //contador de aciertos
 
@@ -33,12 +33,11 @@ var enPausa = false; //pause para esperar a pulsar la segunda carta
 /************FUNCIONES***********/
 //Función para cargar todas las imagenes. Le damos un tamaño de 100x100
 //Guardamos cada imagen dentro del array para guardar las imagenes
-function cargarImagenes(){
-    for( i = 0; i < MAXIMO_FICHAS;i++){
-           aImagenes[i] = new Image(100,100);
-        aImagenes[i].src = oJuego.ruta + i + oJuego.extension;
-    }
-
+function cargarImagenes() {
+  for (i = 0; i < MAXIMO_FICHAS; i++) {
+    aImagenes[i] = new Image(100, 100);
+    aImagenes[i].src = oJuego.ruta + i + oJuego.extension;
+  }
 }
 
 /*********************************/
@@ -47,191 +46,218 @@ function cargarImagenes(){
 //por defecto se muestra en todas la celdas la imagen llamada cruz.png
 //se guardan todos los elementos de la tabla dentro de la variable salida
 //que se muestra al final de la función.
-function mostrarTablero(){
+function mostrarTablero() {
+  //mostramos los contadores
+  document.getElementById("movimientos").innerHTML = oJuego.intentos;
+  document.getElementById("aciertos").innerHTML = oJuego.aciertos;
 
-    //mostramos los contadores
-    document.getElementById("movimientos").innerHTML = oJuego.intentos;
-    document.getElementById("aciertos").innerHTML    = oJuego.aciertos;
+  var salida = "<table>\n";
 
-    var salida = "<table>\n";
-         
-   for (i=0; i < MAXIMO_FICHAS ; i++) {
-        if (i % oJuego.columnas == 0 ){
-            salida += "\n<tr>"
-        }         
-        salida += '<td id="carta_'+ i + '"><a href="" onclick="return false" onmousedown="mostrar(' +i + ')" onmouseup="comprobar('+i+')" >'+
-                  '<img src="' + oJuego.ruta+ "cruz" + oJuego.extension + '"></a></td>';    
+  for (i = 0; i < MAXIMO_FICHAS; i++) {
+    if (i % oJuego.columnas == 0) {
+      salida += "\n<tr>";
     }
-    salida += "</table>";
+    salida +=
+      '<td id="carta_' +
+      i +
+      '"><a href="" onclick="return false" onmousedown="mostrar(' +
+      i +
+      ')" onmouseup="comprobar(' +
+      i +
+      ')" >' +
+      '<img src="' +
+      oJuego.ruta +
+      "cruz" +
+      oJuego.extension +
+      '"></a></td>';
+  }
+  salida += "</table>";
 
-    document.getElementById("tablero").innerHTML = salida;
+  document.getElementById("tablero").innerHTML = salida;
 }
 
 /*********************************/
 
 //functión para empezar y establecer los parámetros antes de mostrar el tablero
-function empezarJuego(){
-    var nUno, nDos, nTemp;
-    oJuego.pulsada  = new Array (-1,-1); //iniciamos en -1 para solo poder usar las posiciones 1 y 0
-    oJuego.intentos = 0;
-    oJuego.aciertos = 0;
+function empezarJuego() {
+  var nUno, nDos, nTemp;
+  oJuego.pulsada = new Array(-1, -1); //iniciamos en -1 para solo poder usar las posiciones 1 y 0
+  oJuego.intentos = 0;
+  oJuego.aciertos = 0;
 
-    // ordenar array ()
-    oJuego.cartas = new Array (MAXIMO_FICHAS)
-    for (i=0; i < MAXIMO_FICHAS ; i++ ){
-           oJuego.cartas[i] = i;
+  // ordenar array ()
+  oJuego.cartas = new Array(MAXIMO_FICHAS);
+  for (i = 0; i < MAXIMO_FICHAS; i++) {
+    oJuego.cartas[i] = i;
+  }
+
+  // desordenar el array()
+  i = 100;
+  while (i--) {
+    nUno = azar(); //aleatorio para separar las parejas
+    nDos = azar(); //aleatorio para separar la pareja de la anterior
+    if (nDos != nUno) {
+      //establecemos el orden
+      nTemp = oJuego.cartas[nUno];
+      oJuego.cartas[nUno] = oJuego.cartas[nDos];
+      oJuego.cartas[nDos] = nTemp;
     }
+  }
 
-    // desordenar el array()
-    i = 100 ;
-    while (i--){
-        nUno = azar(); //aleatorio para separar las parejas
-        nDos = azar(); //aleatorio para separar la pareja de la anterior
-        if (nDos != nUno ){ //establecemos el orden
-              nTemp = oJuego.cartas[nUno]
-              oJuego.cartas[nUno] = oJuego.cartas[nDos]
-              oJuego.cartas[nDos] = nTemp;
-          }
-    }
-
-    mostrarTablero(); //mostramos el tablero gracias a la función mostrarTablero
+  mostrarTablero(); //mostramos el tablero gracias a la función mostrarTablero
 }
 
 /*********************************/
 
 // funciones varias para el juego
-function azar(){  
-    return Math.floor(Math.random()*MAXIMO_FICHAS);
+function azar() {
+  return Math.floor(Math.random() * MAXIMO_FICHAS);
 }
 
 /*********************************/
 
 //función para comprobar si se han pulsado una o dos cartas
-function soloImpar(n){
-    return (n % 2 == 0 ? n : n - 1);
+function soloImpar(n) {
+  return n % 2 == 0 ? n : n - 1;
 }
 
 /*********************************/
 
 //functión para mostrar cada una de las imagenes
-function mostrar(nFicha){
-   if (!enPausa){
-       //buscamos la imagen en el array
-       if ( document.images[nFicha].src.indexOf(oJuego.ruta + "cruz"+ oJuego.extension)!=-1 ) {
-           document.images[nFicha].src = aImagenes[ oJuego.cartas[nFicha] ].src;
-           if ( oJuego.pulsada[0] == -1 )
-               oJuego.pulsada[0]= nFicha;
-           else 
-               oJuego.pulsada[1]= nFicha;
-       } else {
-         //en caso de que se pulse una imagen ya girada    
-         alert("Pulsa sobre una imagen sin pareja ... !!");
-       }
+function mostrar(nFicha) {
+  if (!enPausa) {
+    //buscamos la imagen en el array
+    if (
+      document.images[nFicha].src.indexOf(
+        oJuego.ruta + "cruz" + oJuego.extension
+      ) != -1
+    ) {
+      document.images[nFicha].src = aImagenes[oJuego.cartas[nFicha]].src;
+      if (oJuego.pulsada[0] == -1) oJuego.pulsada[0] = nFicha;
+      else oJuego.pulsada[1] = nFicha;
+    } else {
+      //en caso de que se pulse una imagen ya girada
+      alert("Pulsa sobre una imagen sin pareja ... !!");
     }
+  }
 }
 
 /*********************************/
 
 //functión para volver a dar la vuelta a las cartas
-function quitarPausa(){
-    enPausa= false;
-    document.images[oJuego.pulsada[0]].src = oJuego.ruta + "cruz"+ oJuego.extension;
-    document.images[oJuego.pulsada[1]].src = oJuego.ruta + "cruz"+ oJuego.extension;
+function quitarPausa() {
+  enPausa = false;
+  document.images[oJuego.pulsada[0]].src =
+    oJuego.ruta + "cruz" + oJuego.extension;
+  document.images[oJuego.pulsada[1]].src =
+    oJuego.ruta + "cruz" + oJuego.extension;
 
-   // volver las teclas 
-    oJuego.pulsada[0] = -1;
-    oJuego.pulsada[1] = -1; 
+  // volver las teclas
+  oJuego.pulsada[0] = -1;
+  oJuego.pulsada[1] = -1;
 }
 
 /*********************************/
 
-function comprobar(){
-    // comprobar dos teclas    
-    if( enPausa || oJuego.pulsada[1] == -1){
-        return ;
-   }
-    
-    oJuego.intentos++; //añadimos uno al contador
+function comprobar() {
+  // comprobar dos teclas
+  if (enPausa || oJuego.pulsada[1] == -1) {
+    return;
+  }
 
-    //en caso de acertar 
-    if ( soloImpar(oJuego.cartas[oJuego.pulsada[0]]) == soloImpar(oJuego.cartas[oJuego.pulsada[1]]) ) { 
-        oJuego.aciertos++; //añadimos uno al contador aciertos
-        //si el número de aciertos multiplicado por 2 es igual al número de fichas
-        //se da por teminado el juego
-        if ( oJuego.aciertos * 2 == MAXIMO_FICHAS ) {
-            //Paramos el cronómetro
-            detenerse()
-            //mensaje de final de juego
-            alert("Bien Jugado ... y solo lo has tenido que intentar "+oJuego.intentos+" veces\nComo premio un chorizo de cantimpalo!!!" +
-                "\nHas tardado en completar el juego "+contador_m+":"+(contador_s-1));
-        }
-        oJuego.pulsada[0] = -1;
-        oJuego.pulsada[1] = -1;
-    } else {
-       enPausa= true; //activamos pause
-       setTimeout(quitarPausa,1000); //establecemos el pause en 1 segundo para darse la vuelta las imagenes cuando no coincidan
+  oJuego.intentos++; //añadimos uno al contador
+
+  //en caso de acertar
+  if (
+    soloImpar(oJuego.cartas[oJuego.pulsada[0]]) ==
+    soloImpar(oJuego.cartas[oJuego.pulsada[1]])
+  ) {
+    oJuego.aciertos++; //añadimos uno al contador aciertos
+    //si el número de aciertos multiplicado por 2 es igual al número de fichas
+    //se da por teminado el juego
+    if (oJuego.aciertos * 2 == MAXIMO_FICHAS) {
+      //Paramos el cronómetro
+      detenerse();
+      //mensaje de final de juego
+      alert(
+        "Bien Jugado ... y solo lo has tenido que intentar " +
+          oJuego.intentos +
+          " veces\nComo premio un chorizo de cantimpalo!!!" +
+          "\nHas tardado en completar el juego " +
+          contador_m +
+          ":" +
+          (contador_s - 1)
+      );
     }
-    
-    //mostramos los contadores
-    document.getElementById("movimientos").innerHTML = oJuego.intentos;
-    document.getElementById("aciertos").innerHTML    = oJuego.aciertos;
+    oJuego.pulsada[0] = -1;
+    oJuego.pulsada[1] = -1;
+  } else {
+    enPausa = true; //activamos pause
+    setTimeout(quitarPausa, 1000); //establecemos el pause en 1 segundo para darse la vuelta las imagenes cuando no coincidan
+  }
+
+  //mostramos los contadores
+  document.getElementById("movimientos").innerHTML = oJuego.intentos;
+  document.getElementById("aciertos").innerHTML = oJuego.aciertos;
 }
 
 /*********************************/
 
 //Evento que al cargarse la ventana carga las funciones cargarImagenes, empezarJuego y cargar el reloj
 
-window.onload = function iniciamos () { 
-    cargarImagenes();
-    empezarJuego();
-    bienvenida();
-}
+window.onload = function iniciamos() {
+  //cargo el fecth
+  var personajesharry= [];
+  const url = "http://hp-api.herokuapp.com/api/characters";
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+        data
+    })
+    .catch((err) => console.log(err));
+
+  cargarImagenes();
+  empezarJuego();
+  bienvenida();
+};
 
 /********************************/
 //esta función hace funcionar el reloj desde que se carga la página
-function carga(){
-        contador_s =0;
-        contador_m =0;
-            s = document.getElementById("segundos");
-            m = document.getElementById("minutos");
+function carga() {
+  contador_s = 0;
+  contador_m = 0;
+  s = document.getElementById("segundos");
+  m = document.getElementById("minutos");
 
-                cronometro = setInterval(
-                        function(){
-                        if(contador_s==60)
-                                {
-                                    contador_s=0;
-                                    contador_m++;
-                                    m.innerHTML = contador_m;
+  cronometro = setInterval(function () {
+    if (contador_s == 60) {
+      contador_s = 0;
+      contador_m++;
+      m.innerHTML = contador_m;
 
-                                    if(contador_m==60)
-                                        {
-                                        contador_m=0;
-                                        }
-                                }
+      if (contador_m == 60) {
+        contador_m = 0;
+      }
+    }
 
-                        s.innerHTML = contador_s;
-                            contador_s++;
-
-                        }
-                    ,1000);
-
-        }
+    s.innerHTML = contador_s;
+    contador_s++;
+  }, 1000);
+}
 
 /***********************************/
 //Esta función detiene el cronómetro
-    var cronometro;
+var cronometro;
 
-    function detenerse(){
-           clearInterval(cronometro);
-    }
+function detenerse() {
+  clearInterval(cronometro);
+}
 
 /***************************************/
 //Función de bienvenida  que inicia al reloj
-function bienvenida(){
-    carga();
+function bienvenida() {
+  carga();
 }
-
-
 
 /*   TEMPORIZADOR */
 
@@ -241,82 +267,80 @@ let segundos = 0;
 cargarSegundo();
 
 //Definimos y ejecutamos los segundos
-function cargarSegundo(){
-    let txtSegundos;
+function cargarSegundo() {
+  let txtSegundos;
 
-    if(segundos < 0){
-        segundos = 59; 
-    }
+  if (segundos < 0) {
+    segundos = 59;
+  }
 
-    //Mostrar Segundos en pantalla
-    if(segundos < 10){
-        txtSegundos = `0${segundos}`;
-    }else{
-        txtSegundos = segundos;
-    }
-    document.getElementById('segundos').innerHTML = txtSegundos;
-    segundos--;
+  //Mostrar Segundos en pantalla
+  if (segundos < 10) {
+    txtSegundos = `0${segundos}`;
+  } else {
+    txtSegundos = segundos;
+  }
+  document.getElementById("segundos").innerHTML = txtSegundos;
+  segundos--;
 
-    cargarMinutos(segundos);
+  cargarMinutos(segundos);
 }
 
 //Definimos y ejecutamos los minutos
-function cargarMinutos(segundos){
-    let txtMinutos;
+function cargarMinutos(segundos) {
+  let txtMinutos;
 
-    if(segundos == -1 && minutos !== 0){
-        setTimeout(() =>{
-            minutos--;
-        },500)
-    }else if(segundos == -1 && minutos == 0){
-        setTimeout(() =>{
-            minutos = 59;
-        },500)
-    }
+  if (segundos == -1 && minutos !== 0) {
+    setTimeout(() => {
+      minutos--;
+    }, 500);
+  } else if (segundos == -1 && minutos == 0) {
+    setTimeout(() => {
+      minutos = 59;
+    }, 500);
+  }
 
-    //Mostrar Minutos en pantalla
-    if(minutos < 10){
-        txtMinutos = `0${minutos}`;
-    }else{
-        txtMinutos = minutos;
-    }
-    document.getElementById('minutos').innerHTML = txtMinutos;
-    cargarHoras(segundos,minutos);
+  //Mostrar Minutos en pantalla
+  if (minutos < 10) {
+    txtMinutos = `0${minutos}`;
+  } else {
+    txtMinutos = minutos;
+  }
+  document.getElementById("minutos").innerHTML = txtMinutos;
+  cargarHoras(segundos, minutos);
 }
 
 //Definimos y ejecutamos las horas
-function cargarHoras(segundos,minutos){
-    let txtHoras;
+function cargarHoras(segundos, minutos) {
+  let txtHoras;
 
-    if(segundos == -1 && minutos == 0 && horas !== 0){
-        setTimeout(() =>{
-            horas--;
-        },500)
-    }else if(segundos == -1 && minutos == 0 && horas == 0){
-        setTimeout(() =>{
-            horas = 2;
-        },500)
-    }
+  if (segundos == -1 && minutos == 0 && horas !== 0) {
+    setTimeout(() => {
+      horas--;
+    }, 500);
+  } else if (segundos == -1 && minutos == 0 && horas == 0) {
+    setTimeout(() => {
+      horas = 2;
+    }, 500);
+  }
 
-    //Mostrar Horas en pantalla
-    if(horas < 10){
-        txtHoras = `0${horas}`;
-    }else{
-        txtHoras = horas;
-    }
-    document.getElementById('horas').innerHTML = txtHoras;
+  //Mostrar Horas en pantalla
+  if (horas < 10) {
+    txtHoras = `0${horas}`;
+  } else {
+    txtHoras = horas;
+  }
+  document.getElementById("horas").innerHTML = txtHoras;
 }
 
 //Ejecutamos cada segundo
-setInterval(cargarSegundo,1000);
-
+setInterval(cargarSegundo, 1000);
 
 // // cargo el fecth
 // const response= await fetch('http://hp-api.herokuapp.com/api/characters');
 // const respuesta= await response.json();
 // let personajes = respuesta.filter(x => x.image !="");
 // personajes - personajes.concat(personajes);
-
 // const url = "http://hp-api.herokuapp.com/api/characters";
 // fetch(url)
 //   .then((response) => response.json())
