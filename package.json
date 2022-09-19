@@ -1,0 +1,22 @@
+{
+  "name": "proyecto_harry_potter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Juego de Diaz Matias.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matydiaz434233/Proyecto_Harry_Potter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matydiaz434233/Proyecto_Harry_Potter/issues"
+  },
+  "homepage": "https://github.com/matydiaz434233/Proyecto_Harry_Potter#readme",
+  "dependencies": {
+    "node": "^18.9.0"
+  }
+}
